@@ -1,0 +1,493 @@
+/* ==========================================================================
+   Windows 95 shell styles — shared by the desktop and every application page
+   ========================================================================== */
+
+@font-face {
+  font-family: "W95";
+  src: url("../fonts/ms_sans_serif.woff2") format("woff2");
+  font-weight: normal;
+}
+@font-face {
+  font-family: "W95";
+  src: url("../fonts/ms_sans_serif_bold.woff2") format("woff2");
+  font-weight: bold;
+}
+
+:root {
+  --face: #c0c0c0;
+  --light: #dfdfdf;
+  --shadow: #808080;
+  --navy: #000080;
+  --desktop: #008080;
+  --taskbar-h: 28px;
+
+  --bevel-window: inset -1px -1px #000, inset 1px 1px #dfdfdf, inset -2px -2px #808080, inset 2px 2px #fff;
+  --bevel-btn: inset -1px -1px #000, inset 1px 1px #fff, inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+  --bevel-btn-pressed: inset -1px -1px #fff, inset 1px 1px #000, inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+  --bevel-btn-default: inset -2px -2px #000, inset 1px 1px #000, inset 2px 2px #fff, inset -3px -3px #808080, inset 3px 3px #dfdfdf;
+  --bevel-field: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000;
+  --bevel-thin-in: inset -1px -1px #fff, inset 1px 1px #808080;
+  --bevel-thin-out: inset -1px -1px #808080, inset 1px 1px #fff;
+  --checker: repeating-conic-gradient(#fff 0 25%, #c0c0c0 0 50%) 0 0 / 2px 2px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: "W95", "MS Sans Serif", "Microsoft Sans Serif", Tahoma, Arial, sans-serif;
+  font-size: 11px;
+  color: #000;
+  background: var(--desktop);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+body.busy, body.busy * { cursor: progress !important; }
+
+button { font: inherit; color: inherit; }
+u { text-decoration: underline; }
+
+/* ---------- Desktop ---------- */
+
+.desktop {
+  position: fixed;
+  inset: 0 0 var(--taskbar-h) 0;
+  overflow: hidden;
+}
+
+.desktop-icons {
+  position: absolute;
+  top: 6px;
+  left: 4px;
+  bottom: 4px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, 74px);
+  grid-auto-columns: 76px;
+  gap: 0 4px;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 76px;
+  padding-top: 2px;
+  color: #fff;
+  text-decoration: none;
+  outline: none;
+}
+.desktop-icon img {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.desktop-icon span {
+  margin-top: 4px;
+  padding: 0 2px 1px;
+  line-height: 13px;
+  text-align: center;
+  border: 1px dotted transparent;
+}
+.desktop-icon.selected img { filter: brightness(.55) sepia(1) hue-rotate(185deg) saturate(6); }
+.desktop-icon.selected span { background: var(--navy); }
+.desktop-icon:focus-visible span { border-color: #ff0; }
+
+/* ---------- Windows ---------- */
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 3px;
+  background: var(--face);
+  box-shadow: var(--bevel-window);
+  max-width: 100%;
+  max-height: 100%;
+}
+.window.hidden { display: none; }
+.window.maximized {
+  left: 0 !important;
+  top: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+  flex: none;
+  padding: 0 2px 0 2px;
+  background: var(--navy);
+  color: #fff;
+  font-weight: bold;
+  touch-action: none;
+}
+.window.inactive .title-bar { background: #808080; color: #c0c0c0; }
+.title-bar img { width: 16px; height: 16px; flex: none; }
+.title-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.title-buttons { display: flex; flex: none; }
+.title-buttons button {
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 14px;
+  padding: 0;
+  border: 0;
+  background: var(--face);
+  box-shadow: var(--bevel-btn);
+}
+.title-buttons button:active:not(:disabled) { box-shadow: var(--bevel-btn-pressed); padding: 1px 0 0 1px; }
+.title-buttons button[data-wa="close"] { margin-left: 2px; }
+.title-buttons button:disabled svg { fill: #808080; filter: drop-shadow(1px 1px 0 #fff); }
+
+.window-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Menu bar ---------- */
+
+.menubar {
+  display: flex;
+  flex: none;
+  padding: 1px 0 2px;
+  position: relative;
+}
+.menu { position: relative; }
+.menu-title { padding: 2px 6px 3px; }
+.menu.open > .menu-title { box-shadow: var(--bevel-thin-in); padding: 3px 5px 2px 7px; }
+
+.dropdown, .popup-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5000;
+  display: none;
+  min-width: 160px;
+  padding: 3px;
+  background: var(--face);
+  box-shadow: var(--bevel-window);
+}
+.menu.open > .dropdown { display: block; }
+
+.mi {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 3px 18px 3px 20px;
+  white-space: nowrap;
+}
+.mi:hover:not(.disabled) { background: var(--navy); color: #fff; }
+.mi.disabled { color: #808080; text-shadow: 1px 1px #fff; }
+.mi.checked::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 7px;
+  height: 7px;
+  background: currentColor;
+  clip-path: polygon(0 40%, 14% 26%, 40% 52%, 86% 0, 100% 14%, 40% 80%);
+}
+.mi.radio.checked::before { clip-path: circle(35%); }
+.dropdown hr, .popup-menu hr {
+  margin: 3px 1px;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #fff;
+}
+
+/* ---------- Controls ---------- */
+
+.btn {
+  min-width: 75px;
+  min-height: 23px;
+  padding: 0 12px;
+  border: 0;
+  background: var(--face);
+  box-shadow: var(--bevel-btn);
+  color: #000;
+}
+.btn.default { box-shadow: var(--bevel-btn-default); }
+.btn:active:not(:disabled) { box-shadow: var(--bevel-btn-pressed); padding: 2px 11px 0 13px; }
+.btn:focus-visible { outline: 1px dotted #000; outline-offset: -5px; }
+.btn:disabled { color: #808080; text-shadow: 1px 1px #fff; }
+
+.field {
+  padding: 3px 4px;
+  border: 0;
+  background: #fff;
+  box-shadow: var(--bevel-field);
+  font: inherit;
+  color: #000;
+  outline: none;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.sunken-panel { background: #fff; box-shadow: var(--bevel-field); }
+
+.status-bar {
+  display: flex;
+  gap: 2px;
+  flex: none;
+  margin-top: 2px;
+}
+.status-bar > div {
+  flex: 1;
+  padding: 2px 4px;
+  box-shadow: var(--bevel-thin-in);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+fieldset {
+  margin: 0;
+  padding: 8px 10px 10px;
+  border: 0;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #808080, inset 2px 2px #fff;
+}
+legend { padding: 0 3px; }
+label { display: inline-flex; align-items: center; gap: 4px; }
+input[type="radio"], input[type="checkbox"] { margin: 0; accent-color: #000080; }
+
+.listbox {
+  height: 120px;
+  overflow-y: auto;
+  padding: 2px;
+  background: #fff;
+  box-shadow: var(--bevel-field);
+}
+.listbox > div { padding: 1px 3px; white-space: nowrap; }
+.listbox > div.selected { background: var(--navy); color: #fff; }
+
+/* ---------- Taskbar ---------- */
+
+.taskbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--taskbar-h);
+  padding: 4px 2px 2px;
+  background: var(--face);
+  box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
+}
+
+.start-button {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 22px;
+  padding: 0 5px 0 3px;
+  border: 0;
+  background: var(--face);
+  box-shadow: var(--bevel-btn);
+  font-weight: bold;
+  flex: none;
+}
+.start-button img { width: 16px; height: 16px; }
+.start-button.active { box-shadow: var(--bevel-btn-pressed); padding: 1px 4px 0 4px; }
+.start-button.active span { outline: 1px dotted #000; }
+
+.task-buttons { flex: 1; display: flex; gap: 3px; min-width: 0; }
+.task-btn {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  width: 160px;
+  min-width: 0;
+  height: 22px;
+  padding: 0 4px;
+  border: 0;
+  background: var(--face);
+  box-shadow: var(--bevel-btn);
+  text-align: left;
+}
+.task-btn img { width: 16px; height: 16px; flex: none; }
+.task-btn span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.task-btn.active {
+  background: var(--checker);
+  box-shadow: var(--bevel-btn-pressed);
+  font-weight: bold;
+  padding-top: 2px;
+}
+
+.tray {
+  display: flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  box-shadow: var(--bevel-thin-in);
+  flex: none;
+}
+
+/* ---------- Start menu ---------- */
+
+.start-menu {
+  position: fixed;
+  left: 2px;
+  bottom: calc(var(--taskbar-h) - 2px);
+  z-index: 10001;
+  display: none;
+  padding: 3px;
+  background: var(--face);
+  box-shadow: var(--bevel-window);
+}
+.start-menu.open { display: flex; }
+
+.start-stripe {
+  width: 21px;
+  background: #808080;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 4px;
+}
+.start-stripe span {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font: bold 18px/1 "Arial Black", Arial, sans-serif;
+  color: #c0c0c0;
+  letter-spacing: -.5px;
+}
+.start-stripe b { color: #fff; font-weight: normal; }
+
+.start-items { display: flex; flex-direction: column; }
+.sm-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+  height: 32px;
+  padding: 0 6px 0 4px;
+  white-space: nowrap;
+}
+.sm-item > img { width: 24px; height: 24px; }
+.sm-item .arrow {
+  margin-left: auto;
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-left-color: currentColor;
+  border-right: 0;
+}
+.sm-item:hover, .sm-item.open { background: var(--navy); color: #fff; }
+.start-items > hr {
+  width: 100%;
+  margin: 2px 0;
+  border: 0;
+  border-top: 1px solid #808080;
+  border-bottom: 1px solid #fff;
+}
+
+.submenu {
+  position: absolute;
+  left: calc(100% - 3px);
+  top: -3px;
+  display: none;
+  padding: 3px;
+  background: var(--face);
+  box-shadow: var(--bevel-window);
+  color: #000;
+}
+.sm-item.has-sub:hover > .submenu, .sm-item.open > .submenu { display: block; }
+.submenu .sm-item { height: 22px; gap: 6px; min-width: 130px; color: #000; }
+.submenu .sm-item:hover, .submenu .sm-item.open { color: #fff; }
+.submenu .sm-item > img { width: 16px; height: 16px; }
+
+/* ---------- Dialogs ---------- */
+
+.modal-layer { position: fixed; inset: 0; z-index: 20000; }
+.modal-layer.dither { background: repeating-conic-gradient(rgba(0,0,0,.5) 0 25%, transparent 0 50%) 0 0 / 2px 2px; }
+
+.dialog { min-width: 220px; }
+.dialog .dialog-body { padding: 12px 12px 10px; display: flex; flex-direction: column; gap: 14px; }
+.dialog .dialog-content { display: flex; gap: 14px; align-items: flex-start; }
+.dialog .dialog-icon { flex: none; width: 32px; height: 32px; }
+.dialog .dialog-msg { flex: 1; line-height: 14px; padding-top: 2px; white-space: pre-line; }
+.dialog .dialog-msg.html { white-space: normal; }
+.dialog .dialog-buttons { display: flex; justify-content: center; gap: 6px; }
+
+/* ---------- Boot / shutdown screens ---------- */
+
+.boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 18% 8% at 20% 25%, rgba(255,255,255,.9), transparent 70%),
+    radial-gradient(ellipse 22% 9% at 75% 18%, rgba(255,255,255,.85), transparent 70%),
+    radial-gradient(ellipse 25% 10% at 70% 70%, rgba(255,255,255,.8), transparent 70%),
+    radial-gradient(ellipse 20% 8% at 22% 78%, rgba(255,255,255,.85), transparent 70%),
+    linear-gradient(#3a6fd0, #9cc0f0);
+  color: #000;
+  cursor: progress;
+}
+.boot-logo { display: flex; align-items: center; gap: 18px; }
+.boot-logo img { width: 110px; height: 110px; image-rendering: pixelated; filter: drop-shadow(3px 3px 0 rgba(0,0,0,.35)); }
+.boot-logo div { font: bold 20px Arial, sans-serif; line-height: 1; }
+.boot-logo strong { display: block; font: 900 56px "Arial Black", Arial, sans-serif; letter-spacing: -2px; }
+.boot-logo strong sup { font-size: 30px; color: #fff; text-shadow: 2px 2px 0 #000; vertical-align: top; }
+.boot-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 12px;
+  background: linear-gradient(90deg, #000080, #00a0ff, #ff00ff, #000080, #00a0ff) 0 0 / 200% 100%;
+  animation: bootbar 1.2s linear infinite;
+}
+@keyframes bootbar { to { background-position: -200% 0; } }
+
+.off-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 30000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #ff8c00;
+  font: bold 28px Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 640px) {
+  .task-btn { width: 120px; }
+  .sm-item { min-width: 130px; }
+}

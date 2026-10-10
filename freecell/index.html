@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FreeCell</title>
+  <link rel="icon" href="../assets/icons/freecell.svg">
+  <link rel="stylesheet" href="../assets/css/win95.css">
+  <link rel="stylesheet" href="../assets/css/cards.css">
+  <style>
+    #app-window { width: 660px; height: 500px; }
+    .king { position: absolute; width: 36px; height: 36px; image-rendering: pixelated; }
+    .menubar .cards-left { margin-left: auto; padding: 2px 8px; }
+  </style>
+</head>
+<body data-root="../">
+  <div class="desktop" id="desktop">
+    <div class="window" id="app-window" data-title="FreeCell" data-icon="freecell">
+      <div class="menubar">
+        <div class="menu" data-label="&Game">
+          <div data-action="new" data-shortcut="F2">&New Game</div>
+          <div data-action="select" data-shortcut="F3">&Select Game...</div>
+          <div data-action="restart">&Restart Game</div>
+          <hr>
+          <div data-action="undo" data-shortcut="Ctrl+Z">&Undo</div>
+          <div data-action="stats">S&tatistics...</div>
+          <hr>
+          <div data-action="exit">E&xit</div>
+        </div>
+        <div class="menu" data-label="&Help">
+          <div data-action="howto">&How to Play</div>
+          <hr>
+          <div data-action="about">&About FreeCell</div>
+        </div>
+        <div class="cards-left" id="cards-left"></div>
+      </div>
+      <div class="window-body">
+        <div class="table-wrap" id="wrap"></div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/win95.js"></script>
+  <script src="../assets/js/cards.js"></script>
+  <script src="freecell.js"></script>
+</body>
+</html>

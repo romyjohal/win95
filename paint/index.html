@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>untitled - Paint</title>
+  <link rel="icon" href="../assets/icons/paint.svg">
+  <link rel="stylesheet" href="../assets/css/win95.css">
+  <style>
+    #app-window { width: 680px; height: 500px; }
+    .paint-main { flex: 1; min-height: 0; display: flex; gap: 2px; }
+    .toolbox { width: 56px; flex: none; display: flex; flex-direction: column; align-items: center; padding: 2px 0; }
+    .tools { display: grid; grid-template-columns: 25px 25px; gap: 0; }
+    .tools button {
+      width: 25px; height: 25px; padding: 0; border: 0; background: var(--face); box-shadow: var(--bevel-btn);
+      display: grid; place-items: center;
+    }
+    .tools button.active { background: var(--checker); box-shadow: var(--bevel-btn-pressed); }
+    .tools svg { width: 16px; height: 16px; }
+    .options { margin-top: 6px; width: 42px; height: 66px; box-shadow: var(--bevel-thin-in); display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; padding: 2px; }
+    .options div { width: 34px; display: grid; place-items: center; height: 12px; }
+    .options div.active { background: var(--navy); }
+    .options div.active > * { filter: invert(1); }
+    .canvas-area { flex: 1; min-width: 0; overflow: auto; background: #808080; box-shadow: var(--bevel-field); padding: 5px; touch-action: none; }
+    #canvas { display: block; background: #fff; cursor: crosshair; image-rendering: pixelated; touch-action: none; }
+    .colorbox { display: flex; gap: 4px; align-items: center; padding: 4px 2px 2px; flex: none; }
+    .current-colors { position: relative; width: 30px; height: 31px; box-shadow: var(--bevel-thin-in); background: var(--checker); flex: none; }
+    .current-colors div { position: absolute; width: 15px; height: 15px; box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000; }
+    #fg { left: 4px; top: 4px; z-index: 1; }
+    #bg { left: 12px; top: 12px; }
+    .palette { display: grid; grid-template-rows: 15px 15px; grid-auto-flow: column; grid-auto-columns: 15px; gap: 1px; }
+    .palette div { box-shadow: inset -1px -1px #fff, inset 1px 1px #808080, inset -2px -2px #dfdfdf, inset 2px 2px #000; }
+  </style>
+</head>
+<body data-root="../">
+  <div class="desktop" id="desktop">
+    <div class="window" id="app-window" data-title="Paint" data-icon="paint">
+      <div class="menubar">
+        <div class="menu" data-label="&File">
+          <div data-action="new" data-shortcut="Ctrl+N">&New</div>
+          <div data-action="open">&Open...</div>
+          <div data-action="save" data-shortcut="Ctrl+S">Save &As PNG...</div>
+          <hr>
+          <div data-action="exit">E&xit</div>
+        </div>
+        <div class="menu" data-label="&Edit">
+          <div data-action="undo" data-shortcut="Ctrl+Z">&Undo</div>
+          <div data-action="redo" data-shortcut="Ctrl+Y">&Repeat</div>
+          <hr>
+          <div data-action="clear" data-shortcut="Ctrl+Shift+N">C&lear Image</div>
+        </div>
+        <div class="menu" data-label="&Image">
+          <div data-action="fliph">Flip &Horizontal</div>
+          <div data-action="flipv">Flip &Vertical</div>
+          <div data-action="rotate">&Rotate 180°</div>
+          <div data-action="invert" data-shortcut="Ctrl+I">&Invert Colors</div>
+          <hr>
+          <div data-action="size">&Attributes...</div>
+        </div>
+        <div class="menu" data-label="&Help">
+          <div data-action="about">&About Paint</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="paint-main">
+          <div class="toolbox">
+            <div class="tools" id="tools"></div>
+            <div class="options" id="options"></div>
+          </div>
+          <div class="canvas-area" id="area"><canvas id="canvas" width="520" height="340"></canvas></div>
+        </div>
+        <div class="colorbox">
+          <div class="current-colors"><div id="fg"></div><div id="bg"></div></div>
+          <div class="palette" id="palette"></div>
+        </div>
+        <div class="status-bar"><div id="status">For Help, click Help Topics on the Help Menu.</div><div id="coords" style="flex:0 0 90px"></div></div>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="file-input" accept="image/*" hidden>
+  <input type="color" id="color-input" hidden>
+  <script src="../assets/js/win95.js"></script>
+  <script src="paint.js"></script>
+</body>
+</html>

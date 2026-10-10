@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minesweeper</title>
+  <link rel="icon" href="../assets/icons/minesweeper.svg">
+  <link rel="stylesheet" href="../assets/css/win95.css">
+  <style>
+    .ms {
+      padding: 6px; margin-top: 1px;
+      box-shadow: inset 3px 3px #fff, inset -3px -3px #808080;
+      border-left: 0; display: flex; flex-direction: column; gap: 6px;
+    }
+    .ms-head {
+      display: flex; align-items: center; justify-content: space-between; padding: 4px 5px;
+      box-shadow: inset 2px 2px #808080, inset -2px -2px #fff;
+    }
+    .led { display: flex; background: #000; padding: 1px; box-shadow: 1px 1px #fff, -1px -1px #808080; }
+    .led svg { display: block; width: 13px; height: 23px; }
+    .face {
+      width: 26px; height: 26px; padding: 0; border: 1px solid #808080; background: var(--face);
+      box-shadow: inset 2px 2px #fff, inset -2px -2px #808080; display: grid; place-items: center;
+    }
+    .face:active { box-shadow: inset 1px 1px #808080; padding: 1px 0 0 1px; }
+    .face svg { width: 17px; height: 17px; }
+    .grid {
+      display: grid; box-shadow: inset 3px 3px #808080, inset -3px -3px #fff; padding: 3px;
+      touch-action: none; -webkit-touch-callout: none;
+    }
+    .cell {
+      width: 16px; height: 16px; display: grid; place-items: center;
+      font: bold 13px/1 "W95", Tahoma, Arial, sans-serif;
+      box-shadow: inset 2px 2px #fff, inset -2px -2px #808080; background: var(--face);
+    }
+    .cell svg { width: 12px; height: 12px; display: block; }
+    .cell.open, .cell.down { box-shadow: inset 1px 1px #808080; }
+    .cell.boom { background: #f00; }
+    .n1 { color: #0000ff; } .n2 { color: #008000; } .n3 { color: #ff0000; } .n4 { color: #000080; }
+    .n5 { color: #800000; } .n6 { color: #008080; } .n7 { color: #000; } .n8 { color: #808080; }
+  </style>
+</head>
+<body data-root="../">
+  <div class="desktop" id="desktop">
+    <div class="window" id="app-window" data-title="Minesweeper" data-icon="minesweeper" data-maximizable="false">
+      <div class="menubar">
+        <div class="menu" data-label="&Game">
+          <div data-action="new" data-shortcut="F2">&New</div>
+          <hr>
+          <div data-action="beginner" class="radio">&Beginner</div>
+          <div data-action="intermediate" class="radio">&Intermediate</div>
+          <div data-action="expert" class="radio">&Expert</div>
+          <div data-action="custom" class="radio">&Custom...</div>
+          <hr>
+          <div data-action="marks">&Marks (?)</div>
+          <hr>
+          <div data-action="best">Best &Times...</div>
+          <hr>
+          <div data-action="exit">E&xit</div>
+        </div>
+        <div class="menu" data-label="&Help">
+          <div data-action="howto">&How to Play</div>
+          <hr>
+          <div data-action="about">&About Minesweeper</div>
+        </div>
+      </div>
+      <div class="window-body ms">
+        <div class="ms-head">
+          <div class="led" id="mines-led"></div>
+          <button class="face" id="face" aria-label="New game"></button>
+          <div class="led" id="time-led"></div>
+        </div>
+        <div class="grid" id="grid"></div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/win95.js"></script>
+  <script src="minesweeper.js"></script>
+</body>
+</html>

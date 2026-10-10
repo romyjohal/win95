@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solitaire</title>
+  <link rel="icon" href="../assets/icons/solitaire.svg">
+  <link rel="stylesheet" href="../assets/css/win95.css">
+  <link rel="stylesheet" href="../assets/css/cards.css">
+  <style>
+    #app-window { width: 600px; height: 470px; }
+    .table-wrap { box-shadow: none; }
+  </style>
+</head>
+<body data-root="../">
+  <div class="desktop" id="desktop">
+    <div class="window" id="app-window" data-title="Solitaire" data-icon="solitaire">
+      <div class="menubar">
+        <div class="menu" data-label="&Game">
+          <div data-action="deal" data-shortcut="F2">&Deal</div>
+          <hr>
+          <div data-action="undo" data-shortcut="Ctrl+Z">&Undo</div>
+          <div data-action="deck">De&ck...</div>
+          <hr>
+          <div data-action="draw1" class="radio">Draw &One</div>
+          <div data-action="draw3" class="radio">Draw &Three</div>
+          <div data-action="timed">&Timed game</div>
+          <hr>
+          <div data-action="exit">E&xit</div>
+        </div>
+        <div class="menu" data-label="&Help">
+          <div data-action="howto">&How to Play</div>
+          <hr>
+          <div data-action="about">&About Solitaire</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <div class="table-wrap" id="wrap"></div>
+        <div class="status-bar"><div id="status-msg">&nbsp;</div><div id="score" style="flex:0 0 160px;text-align:right"></div></div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/js/win95.js"></script>
+  <script src="../assets/js/cards.js"></script>
+  <script src="solitaire.js"></script>
+</body>
+</html>

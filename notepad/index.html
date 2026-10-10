@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Untitled - Notepad</title>
+  <link rel="icon" href="../assets/icons/notepad.svg">
+  <link rel="stylesheet" href="../assets/css/win95.css">
+  <style>
+    #app-window { width: 600px; height: 420px; }
+    #text {
+      flex: 1; min-height: 0; width: 100%; resize: none; border: 0; outline: none;
+      padding: 4px 4px; box-shadow: var(--bevel-field);
+      font: 13px/16px "Fixedsys Excelsior", "Lucida Console", "Courier New", monospace;
+      background: #fff; color: #000; user-select: text; -webkit-user-select: text;
+      white-space: pre; overflow: scroll; cursor: text;
+    }
+    #text.wrap { white-space: pre-wrap; overflow-x: hidden; }
+  </style>
+</head>
+<body data-root="../">
+  <div class="desktop" id="desktop">
+    <div class="window" id="app-window" data-title="Notepad" data-icon="notepad">
+      <div class="menubar">
+        <div class="menu" data-label="&File">
+          <div data-action="new">&New</div>
+          <div data-action="open" data-shortcut="Ctrl+O">&Open...</div>
+          <div data-action="save" data-shortcut="Ctrl+S">&Save</div>
+          <div data-action="saveas">Save &As...</div>
+          <hr>
+          <div data-action="upload">&Import from Disk...</div>
+          <div data-action="download">E&xport to Disk...</div>
+          <hr>
+          <div data-action="exit">E&xit</div>
+        </div>
+        <div class="menu" data-label="&Edit">
+          <div data-action="undo" data-shortcut="Ctrl+Z">&Undo</div>
+          <hr>
+          <div data-action="cut" data-shortcut="Ctrl+X">Cu&t</div>
+          <div data-action="copy" data-shortcut="Ctrl+C">&Copy</div>
+          <div data-action="paste" data-shortcut="Ctrl+V">&Paste</div>
+          <div data-action="delete" data-shortcut="Del">De&lete</div>
+          <hr>
+          <div data-action="selectall">Select &All</div>
+          <div data-action="timedate" data-shortcut="F5">Time/&Date</div>
+          <hr>
+          <div data-action="wrap">&Word Wrap</div>
+        </div>
+        <div class="menu" data-label="&Search">
+          <div data-action="find">&Find...</div>
+          <div data-action="findnext" data-shortcut="F3">Find &Next</div>
+        </div>
+        <div class="menu" data-label="&Help">
+          <div data-action="about">&About Notepad</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <textarea id="text" spellcheck="false" autocomplete="off" autocapitalize="off"></textarea>
+      </div>
+    </div>
+  </div>
+  <input type="file" id="file-input" accept=".txt,.md,.ini,.log,.csv,.json,.html,.css,.js,text/*" hidden>
+  <script src="../assets/js/win95.js"></script>
+  <script src="notepad.js"></script>
+</body>
+</html>
